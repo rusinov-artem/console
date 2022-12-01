@@ -8,10 +8,11 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: test
-        run: |
-          ls -lah vendor/
-          ./runtests
+      - uses: php-actions/composer@v6
+      - uses: php-actions/phpunit@master
+        with:
+          configuration: phpunit.xml
+
           
           
 
