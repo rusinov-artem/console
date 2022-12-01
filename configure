@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [[ -z $(docker images -q test/php8.1) ]]
+then
+  docker build -t test/php8.1 .
+fi
+
+if [ ! -f "vendor/autoload.php" ]
+then
+  docker run -it  --rm -v ${PWD}:/var/www test/php8.1 composer install
+fi

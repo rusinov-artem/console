@@ -1,0 +1,3 @@
+#!/bin/bash
+. configure
+docker run -it  --rm -v ${PWD}:/var/www test/php8.1 php vendor/bin/phpunit --bootstrap=test/boot.php test/
