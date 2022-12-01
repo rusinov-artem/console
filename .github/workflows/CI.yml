@@ -13,7 +13,6 @@ jobs:
         with:
           configuration: phpunit.xml
       - run: |
-          ls -lah
           cat output.log
           
 
