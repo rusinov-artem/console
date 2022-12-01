@@ -9,11 +9,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: php-actions/composer@v6
-      - uses: php-actions/phpunit@v3
-        with:
-          configuration: phpunit.xml
       - run: |
-          cat output.log
+          ./runtests
           
 
           
