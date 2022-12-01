@@ -1,5 +1,4 @@
 #!/bin/bash
-. continue
-PARAMS="$@"
-docker run -it --rm -v ${PWD}:/var/www test/php8.1 php example/run.php ${PARAMS}
+. configure
+docker run -it --rm -v ${PWD}:/var/www test/php8.1 php example/run.php "$@"
 

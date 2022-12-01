@@ -20,7 +20,7 @@ class ExampleCommand extends Command
         return 0;
     }
 
-    public static function getHelp()
+    public static function getHelp():string
     {
         return <<<TEXT
                     This command not just prints hello. It can say hello

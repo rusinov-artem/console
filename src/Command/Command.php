@@ -15,12 +15,12 @@ class Command
         $this->app = $app;
     }
 
-    public static function getDescription()
+    public static function getDescription(): string
     {
         return "There should be short description";
     }
 
-    public static function getHelp()
+    public static function getHelp(): string
     {
         return "There should be detailed help";
     }

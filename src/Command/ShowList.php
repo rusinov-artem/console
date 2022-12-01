@@ -22,17 +22,17 @@ class ShowList extends Command
         return 0;
     }
 
-    public static function getDescription()
+    public static function getDescription(): string
     {
         return "List all commands";
     }
 
-    public static function getHelp()
+    public static function getHelp(): string
     {
         return <<<TEXT
             This command show full list of commands in the App
             usage:
-                run list
+                ./run list
         TEXT;
     }
 }

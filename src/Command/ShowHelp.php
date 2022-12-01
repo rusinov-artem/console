@@ -14,17 +14,17 @@ class ShowHelp extends Command
         return 0;
     }
 
-    public static function getDescription()
+    public static function getDescription(): string
     {
         return "Show help for a command";
     }
 
-    public static function getHelp()
+    public static function getHelp(): string
     {
         return <<<TEXT
             This command will show you usage of specified command
             usage:
-                run help {commandName}
+                ./run help {commandName}
                 
         TEXT;
     }

@@ -4,6 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use RusinovArtem\Console\App;
+use RusinovArtem\Console\BuildInput;
 use RusinovArtem\Console\Command\ShowHelp;
 use RusinovArtem\Console\Command\ShowList;
 use RusinovArtem\Console\Event\AfterExecution;
@@ -35,7 +36,7 @@ class AppTest extends TestCase
         ]);
 
         $out = new OutSpy();
-        $app->run(Input::build("help", "{help}"), $out);
+        $app->run(BuildInput::from("help", "{help}"), $out);
 
         self::assertStringContainsString("usage", $out->stdout);
     }
@@ -48,7 +49,7 @@ class AppTest extends TestCase
         ]);
 
         $out = new OutSpy();
-        $app->run(Input::build("default", "{help}"), $out);
+        $app->run(BuildInput::from("default", "{help}"), $out);
 
         self::assertStringContainsString("usage", $out->stdout);
     }
