@@ -36,12 +36,12 @@ class DebugInputCommand extends Command
         return "Show arguments and options passed";
     }
 
-    public static function getHelp(Input $inp): string
+    public static function getHelp(string $entryPoint, string $command): string
     {
         return <<<TEXT
                 This command shows passed arguments and options
                 usage:
-                    php {$inp->entryPoint} {$inp->commandName} [name=Artem]
+                    php {$entryPoint} {$command} [name=Artem]
             TEXT;
     }
 

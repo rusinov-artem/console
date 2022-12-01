@@ -13,11 +13,13 @@ class ExamplesTest extends TestCase
     public function test_CanGetHelpForListCommand() {
         exec("php example/run list {help}", $out);
         self::assertEquals("Help for command list:", $out[0]);
+        self::assertStringContainsString("list", $out[3]);
     }
 
     public function test_CanGetHelpForListCommandDifferent() {
         exec("php example/run help {list}", $out);
         self::assertEquals("Help for command list:", $out[0]);
+        self::assertStringContainsString("list", $out[3]);
     }
 
     public function test_CanGetHelpForHelloCommand() {

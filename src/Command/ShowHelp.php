@@ -12,7 +12,7 @@ class ShowHelp extends Command
     public function run(Input $inp, Output $out): int
     {
         $this->printHead($inp, $out);
-        $out->out($this->app->getHelpFor($inp) . "\n");
+        $out->out($this->app->getHelpFor($this->getCommand(), $inp->entryPoint) . "\n");
         return 0;
     }
 
@@ -32,12 +32,12 @@ class ShowHelp extends Command
         return "Show help for a command";
     }
 
-    public static function getHelp(Input $inp): string
+    public static function getHelp(string $entryPoint, string $command): string
     {
         return <<<TEXT
             This command will show you usage of specified command
             usage:
-                php $inp->entryPoint $inp->commandName {commandName}
+                php $entryPoint $command {commandName}
                 
         TEXT;
     }

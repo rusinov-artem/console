@@ -27,12 +27,12 @@ class ShowList extends Command
         return "List all commands";
     }
 
-    public static function getHelp(Input $inp): string
+    public static function getHelp(string $entryPoint, string $command): string
     {
         return <<<TEXT
             This command show full list of commands in the App
             usage:
-              php {$inp->entryPoint} {$inp->commandName}
+              php {$entryPoint} {$command}
         TEXT;
     }
 }
