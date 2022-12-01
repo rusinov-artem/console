@@ -13,6 +13,7 @@ class Command
     public function setApp(App $app)
     {
         $this->app = $app;
+        return $this;
     }
 
     public static function getDescription(): string

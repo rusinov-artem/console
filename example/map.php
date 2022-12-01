@@ -3,5 +3,5 @@
 return [
     'list' => \RusinovArtem\Console\Command\ShowList::class,
     'hello' => \RusinovArtem\Console\Example\ExampleCommand::class,
-    'debug' => \RusinovArtem\Console\Example\DebugInputCommand::class,
+    'help' => \RusinovArtem\Console\Command\ShowHelp::class,
 ];

@@ -11,7 +11,6 @@ use RusinovArtem\Console\Event\CommandReceived;
 
 class App
 {
-
     protected ?ContainerInterface $container = null;
     protected ?EventDispatcherInterface $eventDispatcher = null;
 
@@ -36,13 +35,8 @@ class App
         $this->dispatch(new CommandReceived($this, $inp, $out));
 
         if (is_null($inp->commandId)) {
-            $out->err("Command {$inp->commandName} not found\n");
+            $out->err("Command $inp->commandName not found\n");
             return 1;
-        }
-
-        if ($inp->arguments->has('help')) {
-            $out->out($this->getHelpFor($inp) . "\n");
-            return 0;
         }
 
         $command = $this->build($inp->commandId);
@@ -71,8 +65,12 @@ class App
         return array_keys($this->map);
     }
 
-    protected function build($commandId): Command
+    public function build($commandId): Command
     {
+        if($commandId instanceof Command) {
+            return $commandId;
+        }
+
         if ($this->container) {
             if ($this->container->has($commandId)) {
                 return $this->container->get($commandId);
