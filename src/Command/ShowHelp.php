@@ -10,7 +10,7 @@ class ShowHelp extends Command
     public function run(Input $inp, Output $out): int
     {
         $out->out("Help for command {$inp->commandName}: \n");
-        $out->out($this->app->getHelpFor($inp->commandName) . "\n");
+        $out->out($this->app->getHelpFor($inp) . "\n");
         return 0;
     }
 
@@ -19,7 +19,7 @@ class ShowHelp extends Command
         return "Show help for a command";
     }
 
-    public static function getHelp(): string
+    public static function getHelp(Input $inp): string
     {
         return <<<TEXT
             This command will show you usage of specified command

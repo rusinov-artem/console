@@ -9,6 +9,7 @@ class Input
         public ParameterBag $parameters = new ParameterBag(),
         public array $raw = [],
         public string $commandName = "",
+        public mixed $commandId = null,
         public string $entryPoint = ""
     ) {
     }

@@ -7,8 +7,10 @@ use RusinovArtem\Console\App;
 use RusinovArtem\Console\BuildInput;
 use RusinovArtem\Console\Command\ShowHelp;
 use RusinovArtem\Console\Command\ShowList;
+use RusinovArtem\Console\DefaultDispatcher;
 use RusinovArtem\Console\Event\AfterExecution;
 use RusinovArtem\Console\Event\BeforeExecution;
+use RusinovArtem\Console\Event\CommandReceived;
 use RusinovArtem\Console\Input;
 use RusinovArtem\Console\Test\OutSpy;
 
@@ -17,39 +19,25 @@ class AppTest extends TestCase
     public function test_CanRunDefaultCommand()
     {
         $app = new App([
-            'default' => ShowList::class,
-            'help' => ShowHelp::class,
+            'list' => ShowList::class,
         ]);
+
+        $app->setEventDispatcher(DefaultDispatcher::build());
 
         $out = new OutSpy();
         $app->run(new Input(), $out);
 
-        self::assertStringContainsString("default", $out->stdout);
-        self::assertStringContainsString("help", $out->stdout);
+        self::assertStringContainsString("List all commands", $out->stdout);
     }
 
     public function test_CanGetHelp()
     {
         $app = new App([
-            'default' => ShowList::class,
             'help' => ShowHelp::class,
         ]);
 
         $out = new OutSpy();
         $app->run(BuildInput::from("help", "{help}"), $out);
-
-        self::assertStringContainsString("usage", $out->stdout);
-    }
-
-    public function test_CanGetHelpOfDefault()
-    {
-        $app = new App([
-            'default' => ShowList::class,
-            'help' => ShowHelp::class,
-        ]);
-
-        $out = new OutSpy();
-        $app->run(BuildInput::from("default", "{help}"), $out);
 
         self::assertStringContainsString("usage", $out->stdout);
     }
@@ -63,19 +51,21 @@ class AppTest extends TestCase
         $app = new App([
             'default' => ShowList::class,
             'help' => ShowHelp::class,
+            'SomeCommand' => "id"
         ]);
 
         $app->setContainer($diContainer);
         $app->setEventDispatcher($dispatcher);
 
         $out = new OutSpy();
-        $app->run(new Input(), $out);
+        $app->run(BuildInput::from("SomeCommand", "{arg1}"), $out);
 
         self::assertTrue($diContainer->hasInvoked);
         self::assertTrue($diContainer->getInvoked);
-        self::assertCount(2, $dispatcher->events);
-        self::assertInstanceOf(BeforeExecution::class, $dispatcher->events[0]);
-        self::assertInstanceOf(AfterExecution::class, $dispatcher->events[1]);
+        self::assertCount(3, $dispatcher->events);
+        self::assertInstanceOf(CommandReceived::class, $dispatcher->events[0]);
+        self::assertInstanceOf(BeforeExecution::class, $dispatcher->events[1]);
+        self::assertInstanceOf(AfterExecution::class, $dispatcher->events[2]);
     }
 
     /**

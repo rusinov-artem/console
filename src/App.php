@@ -7,6 +7,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use RusinovArtem\Console\Command\Command;
 use RusinovArtem\Console\Event\AfterExecution;
 use RusinovArtem\Console\Event\BeforeExecution;
+use RusinovArtem\Console\Event\CommandReceived;
 
 class App
 {
@@ -31,33 +32,30 @@ class App
 
     public function run(Input $inp, Output $out): int
     {
-        if (empty($inp->commandName)) {
-            $inp->commandName = "default";
-        }
+        $inp->commandId = $this->findCommand($inp->commandName);
+        $this->dispatch(new CommandReceived($this, $inp, $out));
 
-        $commandId = $this->findCommand($inp->commandName);
-
-        if ($inp->arguments->has('help')) {
-            $out->out($this->getHelpFor($inp->commandName) . "\n");
-            return 0;
-        }
-
-        if (is_null($commandId)) {
+        if (is_null($inp->commandId)) {
             $out->err("Command {$inp->commandName} not found\n");
             return 1;
         }
 
-        $command = $this->build($commandId);
+        if ($inp->arguments->has('help')) {
+            $out->out($this->getHelpFor($inp) . "\n");
+            return 0;
+        }
+
+        $command = $this->build($inp->commandId);
 
         $this->dispatch(new BeforeExecution($command, $inp, $out));
         $result = $command->run($inp, $out);
-        $this->dispatch(new AfterExecution($command, $inp, $out, $result));
+        $this->dispatch(new AfterExecution($command, $inp, $out));
         return $result;
     }
 
-    public function getHelpFor($commandName): string
+    public function getHelpFor(Input $input): string
     {
-        return $this->map[$commandName]::getHelp();
+        return $this->map[$input->commandName]::getHelp($input);
     }
 
     public function getDescriptionOf($commandName): string
@@ -91,7 +89,7 @@ class App
         $this->eventDispatcher?->dispatch($event);
     }
 
-    protected function findCommand(string $commandName): mixed
+    public function findCommand(string $commandName): mixed
     {
         return $this->map[$commandName] ?? null;
     }

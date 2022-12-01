@@ -20,9 +20,9 @@ class Command
         return "There should be short description";
     }
 
-    public static function getHelp(): string
+    public static function getHelp(Input $inp): string
     {
-        return "There should be detailed help";
+        return "There should be detailed help for command `php {$inp->entryPoint} {$inp->commandName}`";
     }
 
     public function run(Input $inp, Output $out): int

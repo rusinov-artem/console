@@ -1,7 +1,6 @@
 <?php
 
 use RusinovArtem\Console\BuildInput;
-use RusinovArtem\Console\Input;
 
 require_once __DIR__ . "/../vendor/autoload.php";
 

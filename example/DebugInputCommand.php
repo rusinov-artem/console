@@ -10,7 +10,8 @@ class DebugInputCommand extends Command
 {
     public function run(Input $inp, Output $out): int
     {
-        $out->out("Called command: {$inp->commandName}\n");
+        $out->out("Called command: $inp->commandName\n");
+        $out->out("Entry point: $inp->entryPoint\n");
         $this->showArguments($inp, $out);
         $this->showParameters($inp, $out);
         return 0;
@@ -20,7 +21,7 @@ class DebugInputCommand extends Command
     {
         $out->out("Arguments:\n");
         $list = $inp->arguments->getList();
-        if(empty($list)) {
+        if (empty($list)) {
             $out->out("  No arguments passed\n\n");
             return;
         }
@@ -35,26 +36,25 @@ class DebugInputCommand extends Command
         return "Show arguments and options passed";
     }
 
-    public static function getHelp(): string
+    public static function getHelp(Input $inp): string
     {
-       return <<<TEXT
+        return <<<TEXT
                 This command shows passed arguments and options
                 usage:
-                    ./run debug:input {arg1} [name=Artem]
+                    php {$inp->entryPoint} {$inp->commandName} [name=Artem]
             TEXT;
-
     }
 
     protected function showParameters(Input $inp, Output $out)
     {
         $out->out("Options:\n");
         $list = $inp->parameters->toArray();
-        if(empty($list)) {
+        if (empty($list)) {
             $out->out("  No options passed\n\n");
             return;
         }
 
-        foreach ($list as $option=>$values) {
+        foreach ($list as $option => $values) {
             $out->out("  -  $option:\n");
             foreach ($values as $value) {
                 $out->out("    -  $value\n");

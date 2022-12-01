@@ -13,8 +13,3 @@
 ./run hello [name=Artem]
 ```
 
-По умолчанию можно передавать аргументы в формате:
-```bash
-./run debug:input {arg1}
-```
-
