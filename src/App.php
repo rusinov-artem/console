@@ -47,9 +47,9 @@ class App
         return $result;
     }
 
-    public function getHelpFor(string $commandName, string $entryPoint): string
+    public function getHelpFor(string $entryPoint, string $commandName): string
     {
-        return $this->map[$commandName]::getHelp($commandName, $entryPoint);
+        return $this->map[$commandName]::getHelp($entryPoint, $commandName);
     }
 
     public function getDescriptionOf($commandName): string

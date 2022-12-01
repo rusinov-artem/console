@@ -12,7 +12,7 @@ class ShowHelp extends Command
     public function run(Input $inp, Output $out): int
     {
         $this->printHead($inp, $out);
-        $out->out($this->app->getHelpFor($this->getCommand(), $inp->entryPoint) . "\n");
+        $out->out($this->app->getHelpFor($inp->entryPoint, $this->getCommand()) . "\n");
         return 0;
     }
 
