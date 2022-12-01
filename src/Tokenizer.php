@@ -6,7 +6,7 @@ use RusinovArtem\Console\Exception\InputFormat;
 
 class Tokenizer
 {
-    public function run(string $str, Input $inp)
+    public function run(string $str, Input $inp): void
     {
         $len = strlen($str);
 
@@ -16,7 +16,7 @@ class Tokenizer
                 if (!$end) {
                     throw new InputFormat("Expected } after position $i ");
                 }
-                $this->fetchArgs(substr($str, $i + 1, $end - 1 - $i), $inp, $i);
+                $this->fetchArgs(substr($str, $i + 1, $end - 1 - $i), $inp);
                 $i += $end;
             } else {
                 if ('[' == $str[$i]) {
@@ -31,7 +31,7 @@ class Tokenizer
         }
     }
 
-    protected function fetchArgs(string $substr, Input $inp, int $pos)
+    protected function fetchArgs(string $substr, Input $inp): void
     {
         $args = explode(",", $substr);
         foreach ($args as $arg) {
@@ -42,7 +42,7 @@ class Tokenizer
         }
     }
 
-    protected function fetchParameter(string $substr, Input $inp, int $pos)
+    protected function fetchParameter(string $substr, Input $inp, int $pos): void
     {
         $eqPosition = strpos($substr, '=');
         if (false === $eqPosition) {
@@ -67,7 +67,7 @@ class Tokenizer
         }
     }
 
-    protected function fetchMultiValue(string $substr)
+    protected function fetchMultiValue(string $substr): array
     {
         return explode(',', $substr);
     }

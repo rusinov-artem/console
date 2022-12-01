@@ -1,6 +1,8 @@
 <?php
 
-class ExamplesTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+
+class ExamplesTest extends TestCase
 {
     public function test_CanRunWithoutOptions() {
         exec("php example/run", $out);

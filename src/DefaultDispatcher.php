@@ -5,7 +5,6 @@ namespace RusinovArtem\Console;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use RusinovArtem\Console\Command\ShowHelp;
 use RusinovArtem\Console\Event\CommandReceived;
-use RusinovArtem\Console\Example\DebugInputCommand;
 
 class DefaultDispatcher
 {
